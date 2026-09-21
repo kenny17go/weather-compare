@@ -1,0 +1,16 @@
+{
+  "name": "Weather Compare",
+  "short_name": "Weather",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#3375bd",
+  "theme_color": "#438edb",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
