@@ -11,7 +11,9 @@ window.WeatherPush = {
       if(permission!=="granted") throw new Error("permission");
       const reg=await navigator.serviceWorker.ready;
       let sub=await reg.pushManager.getSubscription();
-      if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:weatherPushKey(WEATHER_VAPID_PUBLIC)});
+      const rebuild=localStorage.getItem("weatherPushVapidVersion")!=="v1";
+      if(sub&&rebuild){await sub.unsubscribe();sub=null}
+      if(!sub){sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:weatherPushKey(WEATHER_VAPID_PUBLIC)});localStorage.setItem("weatherPushVapidVersion","v1")}
       payload.subscription=sub.toJSON();
     }
     const response = await fetch(WEATHER_PUSH_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
